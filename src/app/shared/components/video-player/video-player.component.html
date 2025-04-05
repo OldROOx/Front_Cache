@@ -1,0 +1,26 @@
+<!-- src/app/shared/components/video-player/video-player.component.html -->
+<div class="video-player-container" [class.offline]="isOffline">
+  <div class="video-title" *ngIf="title">{{ title }}</div>
+
+  <div class="video-wrapper">
+    <video #videoPlayer [src]="videoUrl" [controls]="controls" preload="auto" class="video-element"></video>
+
+    <!-- Indicador de estado offline -->
+    <div class="offline-indicator" *ngIf="isOffline">
+      <div class="offline-message">
+        <span class="offline-icon">⚠️</span>
+        <span>Sin conexión</span>
+        <span *ngIf="cacheAvailable" class="cache-message">Reproduciéndose desde caché</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controles personalizados (opcional, si no usamos los nativos) -->
+  <div class="custom-controls" *ngIf="!controls">
+    <button (click)="togglePlay()">{{ isPlaying ? 'Pausar' : 'Reproducir' }}</button>
+    <input type="range" [min]="0" [max]="duration" [value]="currentTime" (input)="seekVideo($event)" class="progress-bar">
+    <span class="time-display">{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</span>
+    <button (click)="toggleMute()">{{ isMuted ? 'Activar sonido' : 'Silenciar' }}</button>
+    <input type="range" [min]="0" [max]="1" [step]="0.1" [value]="volume" (input)="changeVolume($event)" class="volume-control">
+  </div>
+</div>

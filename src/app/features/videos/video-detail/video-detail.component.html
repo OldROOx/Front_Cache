@@ -1,0 +1,48 @@
+<div class="video-detail-container" appOfflineAware>
+  <div class="header">
+    <button class="back-button" (click)="goBack()">
+      &larr; Volver a videos
+    </button>
+    <div class="connection-status" [ngClass]="{'offline': !isOnline}">
+      <span class="status-indicator"></span>
+      <span class="status-text">{{ isOnline ? 'En línea' : 'Sin conexión' }}</span>
+    </div>
+  </div>
+
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="loading-spinner"></div>
+    <p>Cargando video...</p>
+  </div>
+
+  <div class="error-container" *ngIf="error && !isLoading">
+    <p class="error-message">{{ error }}</p>
+    <button (click)="goBack()">Volver a la lista de videos</button>
+  </div>
+
+  <div class="video-container" *ngIf="!isLoading && !error && video">
+    <h1 class="video-title">{{ video.title }}</h1>
+
+    <div class="video-player-wrapper">
+      <app-video-player
+        [videoUrl]="videoUrl"
+        [title]="video.title"
+        [controls]="true"
+        [autoplay]="false"
+      ></app-video-player>
+    </div>
+
+    <div class="video-info">
+      <div class="info-header">
+        <p class="upload-date">Subido el {{ video.createdAt | date:'dd/MM/yyyy' }}</p>
+        <div class="info-badges">
+          <span class="badge" *ngIf="!isOnline">Reproduciendo desde caché</span>
+        </div>
+      </div>
+
+      <div class="video-description">
+        <h3>Descripción</h3>
+        <p>{{ video.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

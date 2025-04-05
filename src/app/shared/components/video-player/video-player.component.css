@@ -1,0 +1,87 @@
+/* src/app/shared/components/video-player/video-player.component.css */
+.video-player-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.video-player-container.offline {
+  border: 2px solid #ff6b6b;
+}
+
+.video-title {
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  font-weight: bold;
+}
+
+.video-wrapper {
+  position: relative;
+}
+
+.video-element {
+  width: 100%;
+  display: block;
+}
+
+.offline-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.offline-icon {
+  margin-right: 5px;
+}
+
+.cache-message {
+  font-size: 0.8em;
+  color: #4caf50;
+  margin-left: 5px;
+}
+
+.custom-controls {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+}
+
+.custom-controls button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-right: 10px;
+}
+
+.custom-controls button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar {
+  flex-grow: 1;
+  margin: 0 10px;
+}
+
+.time-display {
+  margin-right: 10px;
+  font-family: monospace;
+}
+
+.volume-control {
+  width: 80px;
+}

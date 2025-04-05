@@ -1,0 +1,41 @@
+<div class="video-list-container" appOfflineAware>
+  <div class="header">
+    <h1>Biblioteca de Videos</h1>
+    <div class="connection-status" [ngClass]="{'offline': !isOnline}">
+      <span class="status-indicator"></span>
+      <span class="status-text">{{ isOnline ? 'En línea' : 'Sin conexión' }}</span>
+    </div>
+  </div>
+
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="loading-spinner"></div>
+    <p>Cargando videos...</p>
+  </div>
+
+  <div class="error-container" *ngIf="error && !isLoading">
+    <p class="error-message">{{ error }}</p>
+    <button (click)="loadVideos()" [disabled]="!isOnline">Reintentar</button>
+  </div>
+
+  <div class="empty-state" *ngIf="!isLoading && !error && videos.length === 0">
+    <p>No hay videos disponibles. Por favor, vuelve más tarde.</p>
+  </div>
+
+  <div class="videos-grid" *ngIf="!isLoading && !error && videos.length > 0">
+    <div class="video-card" *ngFor="let video of videos" (click)="watchVideo(video.id)">
+      <div class="video-thumbnail">
+        <img *ngIf="video.thumbnailPath" [src]="video.thumbnailPath" alt="{{ video.title }}">
+        <div class="placeholder-thumbnail" *ngIf="!video.thumbnailPath">
+          <span class="video-icon">▶</span>
+        </div>
+      </div>
+      <div class="video-info">
+        <h3 class="video-title">{{ video.title }}</h3>
+        <p class="video-description">{{ video.description }}</p>
+        <div class="video-meta" *ngIf="video.duration">
+          <span class="duration">{{ video.duration | date:'mm:ss' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
