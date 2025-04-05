@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest): Observable<AuthResponse> {
-    // Necesitamos convertir al formato que espera FastAPI (form data)
+    // Crear FormData correctamente
     const formData = new FormData();
     formData.append('username', credentials.username);
     formData.append('password', credentials.password);
@@ -42,8 +42,7 @@ export class AuthService {
       .pipe(
         tap(response => {
           this.storeToken(response.accessToken);
-          // Aquí podríamos hacer una llamada adicional para obtener los datos del usuario
-          // o decodificar el JWT si contiene la información del usuario
+          this.tokenSubject.next(response.accessToken); // Añade esta línea
         }),
         catchError(error => {
           return throwError(() => error);
@@ -63,10 +62,8 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
-    // @ts-ignore
-    this.currentUserSubject.next();
-    // @ts-ignore
-    this.tokenSubject.next();
+    this.currentUserSubject.next(null);
+    this.tokenSubject.next(null);
   }
 
   isLoggedIn(): boolean {

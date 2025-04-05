@@ -21,8 +21,7 @@ export class ConnectionService {
 
     // Combinar ambos observables
     merge(online$, offline$).subscribe(status => {
-      // @ts-ignore
-      this.onlineStatusSubject.next();
+      this.onlineStatusSubject.next(status);
     });
   }
 
